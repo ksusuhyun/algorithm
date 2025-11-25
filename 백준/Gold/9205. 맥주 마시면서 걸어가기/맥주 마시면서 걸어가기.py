@@ -13,7 +13,7 @@ def bfs(arr):
             return 'happy'
 
         for i in range(n):
-            if arr[i] != (cx, cy) and v[i] == 0 and abs(arr[i][0]-cx)+abs(arr[i][1]-cy) <= 1000:
+            if v[i] == 0 and abs(arr[i][0]-cx)+abs(arr[i][1]-cy) <= 1000:
                 q.append(arr[i])
                 v[i] = 1
     return 'sad'
