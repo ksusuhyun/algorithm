@@ -3,32 +3,23 @@ ts = [0]*(N+1)
 ps = [0]*(N+1)
 for i in range(1, N+1):
     t, p = map(int, input().split())
-    ts[i] = i+t
+    ts[i] = t
     ps[i] = p
 
-def dfs(st):
-    global cnt
+def dfs(n, sm):
+    global ans
+
+    if n >= N+1:
+        ans = max(ans, sm)
+        return
     
-    cnt += ps[st]
+    # 상담 한다와 상담 안 한다를 호출하는데
+    # 상담 하는 경우는 조건이 붙는다
+    # if-else로 쓰면 안 됨
+    if n+ts[n] <= N+1:
+        dfs(n+ts[n], sm+ps[n])
+    dfs(n+1, sm)
 
-    for i in range(ts[st], N+1):
-        if ts[i] <= (N+1):
-            dfs(i) 
-    
-    ans.append(cnt)
-    cnt -= ps[st]
-
-last_ans = []
-for i in range(1, N+1):
-    if ts[i] <= (N+1):
-        ans = []
-        cnt = 0
-        dfs(i)
-        last_ans.append(max(ans))
-
-# 반례 1
-# 상담할 수 있는 날이 없어서 ans 리스트가 아예 비어있는 경우
-if len(last_ans) == 0:
-    print(0)
-else:
-    print(max(last_ans))
+ans = 0
+dfs(1, 0)
+print(ans)
